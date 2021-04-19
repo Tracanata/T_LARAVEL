@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,18 +24,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/profil', [App\Http\Controllers\HomeController::class, 'profil'])->name('profil');
 
-Route::get('admin/home', [App\Http\Controllers\AdminController::class,'index'])
-->name('admin.home')
-->middleware('is_admin');
+Route::get('admin/home', [App\Http\Controllers\AdminController::class, 'index'])
+    ->name('admin.home')
+    ->middleware('is_admin');
 
 Route::get('admin/books', [App\Http\Controllers\AdminController::class, 'books'])
-->name('admin.books')
-->middleware('is_admin');
+    ->name('admin.books')
+    ->middleware('is_admin');
 
 //PENGELOLAAN BUKU
 Route::post('admin/books', [App\Http\Controllers\AdminController::class, 'submit_book'])
-->name('admin.book.submit')
-->middleware('is_admin');
+    ->name('admin.book.submit')
+    ->middleware('is_admin');
 
 Route::patch('admin/books/update', [App\Http\Controllers\AdminController::class, 'update_book'])
     ->name('admin.book.update')
@@ -45,6 +46,10 @@ Route::delete('admin/books/delete', [App\Http\Controllers\AdminController::class
     ->name('admin.book.delete')
     ->middleware('is_admin');
 
-    Route::get('admin/print_books', [App\Http\Controllers\AdminController::class, 'print_books'])
+Route::get('admin/print_books', [App\Http\Controllers\AdminController::class, 'print_books'])
     ->name('admin.print.books')
+    ->middleware('is_admin');
+
+Route::get('admin/books/export', [\App\Http\Controllers\AdminController::class, 'export'])
+    ->name('admin.book.export')
     ->middleware('is_admin');
